@@ -1,0 +1,102 @@
+<div class="container py-5">
+  <div class="row">
+    <div class="col-12 row container">
+      <div class="box p-2 px-3 col-12 col-md-6">
+        <h5 class="text-muted mb-4">Create work:</h5>
+        <form action="" class="form-horizontal">
+          <div class="form-group work">
+            <label for="work_input" class="control-label">Work Name</label>
+            <input type="text" class="form-control" placeholder="Homeworks" name="work" id="work_input"
+              [(ngModel)]="template.work">
+          </div>
+          <div class="form-group description">
+            <label for="description_input" class="control-label">Work Description</label>
+            <textarea name="description" id="description_input" cols="30" rows="2" class="form-control"
+              placeholder="Description..." [(ngModel)]="template.description"></textarea>
+          </div>
+          <div class="form-group date">
+            <label for="date_input" class="control-label">Expire Date</label>
+            <input type="date" id="date_input" class="form-control" name="date" [(ngModel)]="template.date">
+          </div>
+          <div class="text-right">
+            <input type="submit" value="Submit" class="btn mt-3 px-3 font-weight-bold btn-danger right"
+              (click)="addWork()">
+          </div>
+        </form>
+      </div>
+      <div class="col-12 col-md-6 d-flex flex-column">
+        <div class="alert alert-{{msg.type}} mb-3" *ngIf="msg.open">
+          <span>{{msg.text}}</span>
+          <a href="#" class="close" (click)="msg.open = false">&times;</a>
+        </div>
+        <div *ngIf="!edit.edit; else elseDiv">
+          <div class="box p-2 px-3 mb-3" *ngIf="textAlert.version">
+            <a href="#" class="close" (click)="textAlert.version = false">&times;</a>
+            <h5>New version 1.0.3</h5>
+            <p>Lorem, ipsum dolorit. Nihil delectus architecto nulla sed praesentium! Quo aliquam eveniet facere
+              impedit.
+            </p>
+          </div>
+          <div class="box p-2 px-3 mb-3" *ngIf="textAlert.feature">
+            <a href="#" class="close" (click)="textAlert.feature = false">&times;</a>
+            <h5>Usesfull tool</h5>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum, optio. Lorem ipsum dolor sit amet
+              consectetur adipisicing elit. Nihil delectus architecto nulla sed praesentium! Quo aliquam eveniet facere
+              impedit.</p>
+          </div>
+        </div>
+        <ng-template #elseDiv>
+          <div class="box p-2 px-3">
+            <a href="#" class="close" (click)="clearTemplate()">&times;</a>
+            <h5 class="text-muted mb-4">Edit work:</h5>
+            <form action="" class="form-horizontal">
+              <div class="form-group work">
+                <input type="text" class="form-control" name="work" id="work_input"
+                  value="{{template.work}}" [(ngModel)]="template.work">
+              </div>
+              <div class="form-group description">
+                <textarea name="description" id="description_input" cols="30" rows="2" class="form-control"
+                  value="{{template.description}}" [(ngModel)]="template.description"></textarea>
+              </div>
+              <div class="form-group date">
+                <input type="date" id="date_input" class="form-control" name="date" value="{{template.date}}" [(ngModel)]="template.date">
+              </div>
+              <div class="text-right">
+                <input type="submit" value="Edit" class="btn mt-3 px-3 font-weight-bold btn-danger right"
+                  (click)="updateWork(edit.number)">
+              </div>
+            </form>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="box list-works w-100 mt-5">
+        <table class="table table-bordered bg-white">
+          <thead>
+            <tr>
+              <th>Work</th>
+              <th>Description</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of works; index as num">
+              <td>{{item.work}}</td>
+              <td>{{item.description}}</td>
+              <td>{{item.date}}</td>
+              <td>
+                <div class="d-flex justify-content-center">
+                  <a class="m-2 text-muted" href="#{{num}}" (click)="editWork(num)"><i class="fas fa-edit"></i></a>
+                  <a class="m-2 text-danger" href="#{{num}}" (click)="deleteWork(num)"><i
+                      class="fas fa-trash-alt"></i></a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
